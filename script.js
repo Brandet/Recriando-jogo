@@ -8,7 +8,7 @@ snake[0] = {
 }
 
 let direction = "rigth" ;
-let food = {
+let food = {/*Criando Modo aleatorio para a comida */
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
 }
@@ -63,7 +63,13 @@ function iniciarJogo(){
     if(direction == "down") snakeY += box;
     /*Fim Função coordenada*/
 
-    snake.pop();
+    if(snakeX != food.x || snakeY != food.y){
+        snake.pop();
+    }
+    else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box,
+        food.y = Math.floor(Math.random() * 15 + 1) * box
+    }
 
     let newHead = {
         x: snakeX,
