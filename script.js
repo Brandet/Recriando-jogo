@@ -53,6 +53,15 @@ function iniciarJogo(){
     if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
     if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
     /*Fim Crinando função p/ a cobrinha atravessar paredes*/
+
+    /*Regra do jogo */
+    for(i = 1; i <snake.length; i ++){
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+         clearInterval(jogo);
+         alert('Game Over :(')   
+        }
+    }
+
     let snakeX= snake[0].x;
     let snakeY= snake[0].y;
 
@@ -66,7 +75,7 @@ function iniciarJogo(){
     if(snakeX != food.x || snakeY != food.y){
         snake.pop();
     }
-    else{
+    else{/*Função comida aleatoria*/
         food.x = Math.floor(Math.random() * 15 + 1) * box,
         food.y = Math.floor(Math.random() * 15 + 1) * box
     }
