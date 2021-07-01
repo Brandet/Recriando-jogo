@@ -8,6 +8,10 @@ snake[0] = {
 }
 
 let direction = "rigth" ;
+let food = {
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 /*Criando o Backgroud do jogo*/
 function criarBG(){
@@ -36,6 +40,12 @@ function update (event){
 function iniciarJogo(){
     criarBG();
     criarCobrinha();/*Fim Criando a função iniciar jogo*/
+    drawFood();
+
+    function drawFood(){
+        context.fillStyle = "gray"
+        context.fillRect(food.x, food.y, box, box);
+    }
 
     /*Crinando função p/ a cobrinha atravessar paredes*/
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
