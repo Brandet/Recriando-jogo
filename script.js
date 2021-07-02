@@ -8,6 +8,10 @@ snake[0] = {
 }
 
 let direction = "rigth" ;
+let food = {/*Criando Modo aleatorio para a comida */
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 /*Criando o Backgroud do jogo*/
 function criarBG(){
@@ -23,10 +27,40 @@ function criarCobrinha(){
     }
 } /*Fim Criando a Cobrinha*/
 
+/*Add movimentos a cobrinha*/
+document.addEventListener('keydown', update);
+function update (event){
+    if(event.keyCode == 37 && direction !="right") direction ="left";
+    if(event.keyCode == 38 && direction !="down") direction ="up";
+    if(event.keyCode == 39 && direction !="left") direction ="right";
+    if(event.keyCode == 40 && direction !="up") direction ="down";
+}/*Fim Add movimentos a cobrinha*/
+
 /*Criando a função iniciar jogo*/
 function iniciarJogo(){
     criarBG();
     criarCobrinha();/*Fim Criando a função iniciar jogo*/
+    drawFood();
+
+    function drawFood(){
+        context.fillStyle = "gray"
+        context.fillRect(food.x, food.y, box, box);
+    }
+
+    /*Crinando função p/ a cobrinha atravessar paredes*/
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
+    if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+    /*Fim Crinando função p/ a cobrinha atravessar paredes*/
+
+    /*Regra do jogo */
+    for(i = 1; i <snake.length; i ++){
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+         clearInterval(jogo);
+         alert('Game Over :(')   
+        }
+    }
 
     let snakeX= snake[0].x;
     let snakeY= snake[0].y;
@@ -38,7 +72,13 @@ function iniciarJogo(){
     if(direction == "down") snakeY += box;
     /*Fim Função coordenada*/
 
-    snake.pop();
+    if(snakeX != food.x || snakeY != food.y){
+        snake.pop();
+    }
+    else{/*Função comida aleatoria*/
+        food.x = Math.floor(Math.random() * 15 + 1) * box,
+        food.y = Math.floor(Math.random() * 15 + 1) * box
+    }
 
     let newHead = {
         x: snakeX,
